@@ -6,6 +6,7 @@ const TYPES = {
   Bot: Symbol('Bot'),
   Event: Symbol('Event'),
   Command: Symbol('Command'),
+  Voice: Symbol('Voice'),
 }
 
 export default TYPES

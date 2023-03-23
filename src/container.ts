@@ -1,11 +1,14 @@
 import { Client, Events, GatewayIntentBits, REST } from 'discord.js'
 import { Container } from 'inversify'
 import Bot from './bot'
+import { Disconnect } from './commands/disconnect'
+import Join from './commands/join'
 import Ping from './commands/ping'
 import ClientReady from './events/client-ready'
 import InteractionCreate from './events/interaction-create'
 import Config from './services/config'
 import { Logger, logger } from './services/logger'
+import { Voice } from './services/voice'
 import Command from './structs/command'
 import Event from './structs/event'
 import TYPES from './types'
@@ -19,6 +22,9 @@ container.bind<Logger>(TYPES.Logger).toConstantValue(logger)
 
 // Config
 container.bind<Config>(TYPES.Config).to(Config).inSingletonScope()
+
+// Services
+container.bind<Voice>(TYPES.Voice).to(Voice).inSingletonScope()
 
 // Bot
 const config = container.get<Config>(TYPES.Config)
@@ -36,7 +42,7 @@ container
   .inSingletonScope()
 
 // Commands
-const commands = [Ping]
+const commands = [Ping, Join, Disconnect]
 for (const command of commands) {
   container.bind<Command>(TYPES.Command).to(command).inSingletonScope()
 }
