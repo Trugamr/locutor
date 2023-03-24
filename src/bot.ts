@@ -29,15 +29,15 @@ export default class Bot {
   async register() {
     // TODO: Add config option to register only if required
     // Register all slash commands
-    this.logger.info('Registering slash command(s)')
-    const result = await this.rest.put(
-      Routes.applicationCommands(this.config.get('DISCORD_CLIENT_ID')),
-      {
-        body: this.commandsByName.map(command => command.builder.toJSON()),
-      },
-    )
-    const parsed = await z.array(z.unknown()).parseAsync(result)
-    this.logger.info(`Registered ${parsed.length} slash command(s)`)
+    // this.logger.info('Registering slash command(s)')
+    // const result = await this.rest.put(
+    //   Routes.applicationCommands(this.config.get('DISCORD_CLIENT_ID')),
+    //   {
+    //     body: this.commandsByName.map(command => command.builder.toJSON()),
+    //   },
+    // )
+    // const parsed = await z.array(z.unknown()).parseAsync(result)
+    // this.logger.info(`Registered ${parsed.length} slash command(s)`)
 
     // Add event listeners
     for (const event of this.events) {

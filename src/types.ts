@@ -7,6 +7,7 @@ const TYPES = {
   Event: Symbol('Event'),
   Command: Symbol('Command'),
   Voice: Symbol('Voice'),
+  Players: Symbol('Players'),
 }
 
 export default TYPES

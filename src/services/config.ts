@@ -4,6 +4,7 @@ import { z } from 'zod'
 const schema = z.object({
   DISCORD_CLIENT_ID: z.string().nonempty(),
   DISCORD_BOT_TOKEN: z.string().nonempty(),
+  TTS_API_URL: z.string().url(),
 })
 
 type ConfigVariables = z.infer<typeof schema>

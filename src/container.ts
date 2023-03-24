@@ -7,6 +7,7 @@ import Ping from './commands/ping'
 import ClientReady from './events/client-ready'
 import InteractionCreate from './events/interaction-create'
 import VoiceStateUpdate from './events/voice-state-update'
+import Players from './managers/players'
 import Config from './services/config'
 import { Logger, logger } from './services/logger'
 import { Voice } from './services/voice'
@@ -45,6 +46,9 @@ container
   .bind<Event<Events.VoiceStateUpdate>>(TYPES.Event)
   .to(VoiceStateUpdate)
   .inSingletonScope()
+
+// Managers
+container.bind<Players>(TYPES.Players).to(Players).inSingletonScope()
 
 // Commands
 const commands = [Ping, Join, Disconnect]
