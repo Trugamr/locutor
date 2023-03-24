@@ -18,7 +18,7 @@ export default class Join implements Command {
 
     invariant(interaction.guild, 'interaction must be in guild')
 
-    const connection = this.voice.get(interaction.guild.id)
+    let connection = this.voice.get(interaction.guild.id)
     if (connection) {
       // Destroy existing connection
       connection.destroy()
@@ -32,13 +32,13 @@ export default class Join implements Command {
       return false
     })
     if (!channel) {
-      await interaction.reply('You must be in voice channel')
+      await interaction.editReply('You must be in voice channel')
       return
     }
     invariant(channel.type === ChannelType.GuildVoice, 'channel must be voice channel')
 
     // Join voice channel
-    this.voice.join(channel)
+    connection = this.voice.join(channel)
 
     await interaction.editReply('Joined voice channel')
   }
