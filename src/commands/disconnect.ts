@@ -26,6 +26,6 @@ export class Disconnect implements Command {
     connection.destroy()
 
     // TODO: Await state change
-    await interaction.reply('Disconnected from voice channel')
+    await interaction.reply({ content: 'Disconnected from voice channel', ephemeral: true })
   }
 }

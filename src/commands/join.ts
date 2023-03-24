@@ -18,24 +18,27 @@ export default class Join implements Command {
 
     invariant(interaction.guild, 'interaction must be in guild')
 
-    let connection = this.voice.get(interaction.guild.id)
-    // If no active voice connection is found try to join one
-    if (!connection) {
-      // Check if user is currently in a voice channel
-      const channel = interaction.guild.channels.cache.find(channel => {
-        if (channel.type === ChannelType.GuildVoice) {
-          return channel.members.find(member => member.id === interaction.user.id)
-        }
-        return false
-      })
-      if (!channel) {
-        await interaction.reply('You must be in voice channel')
-        return
-      }
-      invariant(channel.type === ChannelType.GuildVoice, 'channel must be voice channel')
-      // Join voice channel
-      connection = this.voice.join(channel)
+    const connection = this.voice.get(interaction.guild.id)
+    if (connection) {
+      // Destroy existing connection
+      connection.destroy()
     }
+
+    // Check if user is currently in a voice channel
+    const channel = interaction.guild.channels.cache.find(channel => {
+      if (channel.type === ChannelType.GuildVoice) {
+        return channel.members.find(member => member.id === interaction.user.id)
+      }
+      return false
+    })
+    if (!channel) {
+      await interaction.reply('You must be in voice channel')
+      return
+    }
+    invariant(channel.type === ChannelType.GuildVoice, 'channel must be voice channel')
+
+    // Join voice channel
+    this.voice.join(channel)
 
     await interaction.editReply('Joined voice channel')
   }
