@@ -6,6 +6,7 @@ import Join from './commands/join'
 import Ping from './commands/ping'
 import ClientReady from './events/client-ready'
 import InteractionCreate from './events/interaction-create'
+import VoiceStateUpdate from './events/voice-state-update'
 import Config from './services/config'
 import { Logger, logger } from './services/logger'
 import { Voice } from './services/voice'
@@ -39,6 +40,10 @@ container.bind<Event<Events.ClientReady>>(TYPES.Event).to(ClientReady).inSinglet
 container
   .bind<Event<Events.InteractionCreate>>(TYPES.Event)
   .to(InteractionCreate)
+  .inSingletonScope()
+container
+  .bind<Event<Events.VoiceStateUpdate>>(TYPES.Event)
+  .to(VoiceStateUpdate)
   .inSingletonScope()
 
 // Commands

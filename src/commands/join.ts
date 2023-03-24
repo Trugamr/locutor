@@ -20,6 +20,7 @@ export default class Join implements Command {
 
     let connection = this.voice.get(interaction.guild.id)
     if (connection) {
+      // TODO: Don't destroy connection if user is already in the same channel
       // Destroy existing connection
       connection.destroy()
     }
